@@ -12,11 +12,11 @@ import java.net.URL;
 public class Demo {
 
     public static void main(String[] args) throws IOException {
-        Context context = Context.create();
-        URL url = Demo.class.getResource("demo.js");
-        context.eval(Source.newBuilder("js",new File(url.getFile())).build());
-        Value mainFunc = context.getBindings("js").getMember("mainFunc");
-        mainFunc.execute();
-        context.close();
+        try(Context context = Context.create()) {
+            URL url = Demo.class.getResource("demo.js");
+            context.eval(Source.newBuilder("js", new File(url.getFile())).build());
+            Value mainFunc = context.getBindings("js").getMember("mainFunc");
+            mainFunc.execute();
+        }
     }
 }
